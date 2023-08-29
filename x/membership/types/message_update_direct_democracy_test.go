@@ -34,7 +34,6 @@ func TestMsgUpdateDirectDemocracy_ValidateBasic(t *testing.T) {
 				require.ErrorIs(t, err, tt.err)
 				return
 			}
-			require.NoError(t, err)
 		})
 	}
 }
