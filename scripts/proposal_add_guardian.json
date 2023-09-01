@@ -1,12 +1,8 @@
 {
-  "title": "Guardians: update the guardian list",
-  "description": "Update the guardian list",
-  "changes": [
-    {
-      "subspace": "membership",
-      "key": "Guardians",
-      "value": "mm16rcnqanqy8e99lnzus9tgs8qug6l9r0q9l9vvn"
-    }
+  "title": "Add a new guardian",
+  "description": "Add a new guardian to the direct democracy config",
+  "guardians_to_add": [
+    "mm1dmh80jwx0mv5khvqdz9sj28dmuhvems97wq628"
   ],
   "deposit": "1000000unoria"
 }

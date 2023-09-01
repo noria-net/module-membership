@@ -47,12 +47,5 @@ echo "val2 voting Yes on proposal $PROPOSAL_ID"
 echo "me voting Yes on proposal $PROPOSAL_ID"
 ./tx-gas.sh membershipd tx gov vote $PROPOSAL_ID Yes --from me
 
-# Loop until the STATUS is either "PROPOSAL_STATUS_REJECTED" or "PROPOSAL_STATUS_PASSED"
-while true; do
-    STATUS=$(membershipd query gov proposal $PROPOSAL_ID --output json | jq -r '.status')
-    echo "Proposal status: $STATUS"
-    if [ "$STATUS" = "PROPOSAL_STATUS_REJECTED" ] || [ "$STATUS" = "PROPOSAL_STATUS_PASSED" ]; then
-        break
-    fi
-    sleep 2
-done
+# Wait for it to pass or fail
+./wait_for_proposal_complete.sh $PROPOSAL_ID
