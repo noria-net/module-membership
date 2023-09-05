@@ -8,21 +8,21 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestMsgUpdateDirectDemocracy_ValidateBasic(t *testing.T) {
+func TestMsgAddGuardians_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgUpdateDirectDemocracy
+		msg  MsgAddGuardians
 		err  error
 	}{
 		{
 			name: "invalid address",
-			msg: MsgUpdateDirectDemocracy{
+			msg: MsgAddGuardians{
 				Creator: "invalid_address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
-			msg: MsgUpdateDirectDemocracy{
+			msg: MsgAddGuardians{
 				Creator: sample.AccAddress(),
 			},
 		},
@@ -34,6 +34,7 @@ func TestMsgUpdateDirectDemocracy_ValidateBasic(t *testing.T) {
 				require.ErrorIs(t, err, tt.err)
 				return
 			}
+			require.NoError(t, err)
 		})
 	}
 }

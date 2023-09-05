@@ -7,11 +7,11 @@ import (
 	"github.com/noria-net/module-membership/x/membership/types"
 )
 
-func (k msgServer) UpdateDirectDemocracy(goCtx context.Context, msg *types.MsgUpdateDirectDemocracy) (*types.MsgUpdateDirectDemocracyResponse, error) {
+func (k msgServer) AddGuardians(goCtx context.Context, msg *types.MsgAddGuardians) (*types.MsgAddGuardiansResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// TODO: Handling the message
 	_ = ctx
 
-	return &types.MsgUpdateDirectDemocracyResponse{}, nil
+	return &types.MsgAddGuardiansResponse{}, nil
 }

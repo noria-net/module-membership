@@ -6,7 +6,6 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
 	proto "github.com/cosmos/gogoproto/proto"
@@ -217,26 +216,24 @@ func (m *MsgUpdateStatusResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgUpdateStatusResponse proto.InternalMessageInfo
 
-// MsgUpdateDirectDemocracy submits a proposal to update the guardians and/or total voting weight
-type MsgUpdateDirectDemocracy struct {
-	Creator           string                                  `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
-	AddGuardians      []string                                `protobuf:"bytes,2,rep,name=add_guardians,json=addGuardians,proto3" json:"add_guardians,omitempty"`
-	RemoveGuardians   []string                                `protobuf:"bytes,3,rep,name=remove_guardians,json=removeGuardians,proto3" json:"remove_guardians,omitempty"`
-	TotalVotingWeight *github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,4,opt,name=total_voting_weight,json=totalVotingWeight,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"total_voting_weight,omitempty"`
+// MsgAddGuardians submits a proposal to add guardians
+type MsgAddGuardians struct {
+	Creator   string   `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Guardians []string `protobuf:"bytes,2,rep,name=guardians,proto3" json:"guardians,omitempty"`
 }
 
-func (m *MsgUpdateDirectDemocracy) Reset()         { *m = MsgUpdateDirectDemocracy{} }
-func (m *MsgUpdateDirectDemocracy) String() string { return proto.CompactTextString(m) }
-func (*MsgUpdateDirectDemocracy) ProtoMessage()    {}
-func (*MsgUpdateDirectDemocracy) Descriptor() ([]byte, []int) {
+func (m *MsgAddGuardians) Reset()         { *m = MsgAddGuardians{} }
+func (m *MsgAddGuardians) String() string { return proto.CompactTextString(m) }
+func (*MsgAddGuardians) ProtoMessage()    {}
+func (*MsgAddGuardians) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c82c40c64be48422, []int{4}
 }
-func (m *MsgUpdateDirectDemocracy) XXX_Unmarshal(b []byte) error {
+func (m *MsgAddGuardians) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgUpdateDirectDemocracy) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgAddGuardians) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgUpdateDirectDemocracy.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgAddGuardians.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -246,55 +243,48 @@ func (m *MsgUpdateDirectDemocracy) XXX_Marshal(b []byte, deterministic bool) ([]
 		return b[:n], nil
 	}
 }
-func (m *MsgUpdateDirectDemocracy) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgUpdateDirectDemocracy.Merge(m, src)
+func (m *MsgAddGuardians) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgAddGuardians.Merge(m, src)
 }
-func (m *MsgUpdateDirectDemocracy) XXX_Size() int {
+func (m *MsgAddGuardians) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgUpdateDirectDemocracy) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgUpdateDirectDemocracy.DiscardUnknown(m)
+func (m *MsgAddGuardians) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgAddGuardians.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgUpdateDirectDemocracy proto.InternalMessageInfo
+var xxx_messageInfo_MsgAddGuardians proto.InternalMessageInfo
 
-func (m *MsgUpdateDirectDemocracy) GetCreator() string {
+func (m *MsgAddGuardians) GetCreator() string {
 	if m != nil {
 		return m.Creator
 	}
 	return ""
 }
 
-func (m *MsgUpdateDirectDemocracy) GetAddGuardians() []string {
+func (m *MsgAddGuardians) GetGuardians() []string {
 	if m != nil {
-		return m.AddGuardians
+		return m.Guardians
 	}
 	return nil
 }
 
-func (m *MsgUpdateDirectDemocracy) GetRemoveGuardians() []string {
-	if m != nil {
-		return m.RemoveGuardians
-	}
-	return nil
+// MsgAddGuardiansResponse is an empty response
+type MsgAddGuardiansResponse struct {
 }
 
-// MsgUpdateDirectDemocracyResponse is an empty response
-type MsgUpdateDirectDemocracyResponse struct {
-}
-
-func (m *MsgUpdateDirectDemocracyResponse) Reset()         { *m = MsgUpdateDirectDemocracyResponse{} }
-func (m *MsgUpdateDirectDemocracyResponse) String() string { return proto.CompactTextString(m) }
-func (*MsgUpdateDirectDemocracyResponse) ProtoMessage()    {}
-func (*MsgUpdateDirectDemocracyResponse) Descriptor() ([]byte, []int) {
+func (m *MsgAddGuardiansResponse) Reset()         { *m = MsgAddGuardiansResponse{} }
+func (m *MsgAddGuardiansResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgAddGuardiansResponse) ProtoMessage()    {}
+func (*MsgAddGuardiansResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c82c40c64be48422, []int{5}
 }
-func (m *MsgUpdateDirectDemocracyResponse) XXX_Unmarshal(b []byte) error {
+func (m *MsgAddGuardiansResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *MsgUpdateDirectDemocracyResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *MsgAddGuardiansResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_MsgUpdateDirectDemocracyResponse.Marshal(b, m, deterministic)
+		return xxx_messageInfo_MsgAddGuardiansResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -304,25 +294,25 @@ func (m *MsgUpdateDirectDemocracyResponse) XXX_Marshal(b []byte, deterministic b
 		return b[:n], nil
 	}
 }
-func (m *MsgUpdateDirectDemocracyResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgUpdateDirectDemocracyResponse.Merge(m, src)
+func (m *MsgAddGuardiansResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgAddGuardiansResponse.Merge(m, src)
 }
-func (m *MsgUpdateDirectDemocracyResponse) XXX_Size() int {
+func (m *MsgAddGuardiansResponse) XXX_Size() int {
 	return m.Size()
 }
-func (m *MsgUpdateDirectDemocracyResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgUpdateDirectDemocracyResponse.DiscardUnknown(m)
+func (m *MsgAddGuardiansResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgAddGuardiansResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_MsgUpdateDirectDemocracyResponse proto.InternalMessageInfo
+var xxx_messageInfo_MsgAddGuardiansResponse proto.InternalMessageInfo
 
 func init() {
 	proto.RegisterType((*MsgEnroll)(nil), "membershipmodule.membership.MsgEnroll")
 	proto.RegisterType((*MsgEnrollResponse)(nil), "membershipmodule.membership.MsgEnrollResponse")
 	proto.RegisterType((*MsgUpdateStatus)(nil), "membershipmodule.membership.MsgUpdateStatus")
 	proto.RegisterType((*MsgUpdateStatusResponse)(nil), "membershipmodule.membership.MsgUpdateStatusResponse")
-	proto.RegisterType((*MsgUpdateDirectDemocracy)(nil), "membershipmodule.membership.MsgUpdateDirectDemocracy")
-	proto.RegisterType((*MsgUpdateDirectDemocracyResponse)(nil), "membershipmodule.membership.MsgUpdateDirectDemocracyResponse")
+	proto.RegisterType((*MsgAddGuardians)(nil), "membershipmodule.membership.MsgAddGuardians")
+	proto.RegisterType((*MsgAddGuardiansResponse)(nil), "membershipmodule.membership.MsgAddGuardiansResponse")
 }
 
 func init() {
@@ -330,38 +320,31 @@ func init() {
 }
 
 var fileDescriptor_c82c40c64be48422 = []byte{
-	// 491 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0xc1, 0x6e, 0xd3, 0x40,
-	0x10, 0xcd, 0x36, 0x55, 0x4a, 0x46, 0x85, 0x52, 0x17, 0x84, 0x31, 0x92, 0x5b, 0x59, 0xa8, 0x0a,
-	0x12, 0xb1, 0xa5, 0x02, 0x07, 0x0e, 0x1c, 0x88, 0x52, 0x71, 0xca, 0xc5, 0x15, 0x20, 0x71, 0x20,
-	0x6c, 0xbc, 0xa3, 0x8d, 0xd5, 0xd8, 0x6b, 0xed, 0x6e, 0x4a, 0xfb, 0x0f, 0x20, 0xf1, 0x59, 0x3d,
-	0xf6, 0x88, 0x38, 0x54, 0x28, 0x39, 0x72, 0xe1, 0x13, 0x90, 0xed, 0xd8, 0x71, 0x23, 0x30, 0x85,
-	0x53, 0x76, 0x76, 0xde, 0x7b, 0xf3, 0x32, 0x33, 0x6b, 0x78, 0x18, 0x61, 0x34, 0x42, 0xa9, 0xc6,
-	0x61, 0x12, 0x09, 0x36, 0x9d, 0xa0, 0xb7, 0xbc, 0xf0, 0xf4, 0xa9, 0x9b, 0x48, 0xa1, 0x85, 0xf1,
-	0x60, 0x15, 0xe5, 0x2e, 0x2f, 0xac, 0x3b, 0x5c, 0x70, 0x91, 0xe1, 0xbc, 0xf4, 0x94, 0x53, 0xac,
-	0x4e, 0x9d, 0x70, 0x7e, 0xcc, 0x91, 0xce, 0x4b, 0x68, 0x0f, 0x14, 0x3f, 0x8c, 0xa5, 0x98, 0x4c,
-	0x0c, 0x13, 0x36, 0x02, 0x89, 0x54, 0x0b, 0x69, 0x92, 0x3d, 0xd2, 0x69, 0xfb, 0x45, 0x68, 0x58,
-	0x70, 0x23, 0x0e, 0x83, 0xe3, 0x98, 0x46, 0x68, 0x36, 0xb3, 0x54, 0x19, 0x3b, 0x3b, 0xb0, 0x5d,
-	0x4a, 0xf8, 0xa8, 0x12, 0x11, 0x2b, 0x74, 0x3e, 0x11, 0xd8, 0x1a, 0x28, 0xfe, 0x3a, 0x61, 0x54,
-	0xe3, 0x91, 0xa6, 0x7a, 0xaa, 0x6a, 0xe4, 0x4d, 0xd8, 0xa0, 0x8c, 0x49, 0x54, 0xca, 0x5c, 0xcb,
-	0x33, 0x8b, 0xd0, 0x38, 0x84, 0x96, 0xca, 0xd8, 0x59, 0xd9, 0x5b, 0x07, 0x5d, 0xb7, 0xa6, 0x1b,
-	0xee, 0xa0, 0x3c, 0xe6, 0x25, 0xfd, 0x05, 0xd9, 0xb9, 0x0f, 0xf7, 0x56, 0xdc, 0x94, 0x4e, 0x7f,
-	0x12, 0x30, 0xcb, 0x5c, 0x3f, 0x94, 0x18, 0xe8, 0x3e, 0x46, 0x22, 0x90, 0x34, 0x38, 0xab, 0xb1,
-	0xfc, 0x08, 0x6e, 0x52, 0xc6, 0x86, 0x7c, 0x4a, 0x25, 0x0b, 0x69, 0x9c, 0x1a, 0x6f, 0x76, 0xda,
-	0xbd, 0xf5, 0xf3, 0xcb, 0x5d, 0xe2, 0x6f, 0x52, 0xc6, 0x5e, 0x15, 0x19, 0xc3, 0x83, 0xdb, 0x12,
-	0x23, 0x71, 0x82, 0x15, 0x74, 0xb3, 0x82, 0xde, 0xca, 0xb3, 0x4b, 0xc2, 0x7b, 0xd8, 0xd1, 0x42,
-	0xd3, 0xc9, 0xf0, 0x44, 0xe8, 0x30, 0xe6, 0xc3, 0x8f, 0x18, 0xf2, 0xb1, 0x36, 0xd7, 0x53, 0x07,
-	0x3d, 0x37, 0xe5, 0x7c, 0xbb, 0xdc, 0xdd, 0xe7, 0xa1, 0x1e, 0x4f, 0x47, 0x6e, 0x20, 0x22, 0x2f,
-	0x10, 0x2a, 0x12, 0x6a, 0xf1, 0xd3, 0x55, 0xec, 0xd8, 0xd3, 0x67, 0x09, 0x2a, 0xb7, 0x8f, 0x81,
-	0xbf, 0x9d, 0x49, 0xbd, 0xc9, 0x94, 0xde, 0x66, 0x42, 0x8e, 0x03, 0x7b, 0x7f, 0xfa, 0xc7, 0x45,
-	0x5b, 0x0e, 0x7e, 0xac, 0x41, 0x73, 0xa0, 0xb8, 0xf1, 0x01, 0x5a, 0x8b, 0xed, 0xd8, 0xaf, 0x6f,
-	0x7d, 0xb1, 0x02, 0x96, 0x7b, 0x3d, 0x5c, 0x51, 0xc9, 0x90, 0xb0, 0x79, 0x65, 0x4d, 0x1e, 0xff,
-	0x8d, 0x5f, 0x45, 0x5b, 0x4f, 0xff, 0x05, 0x5d, 0xd6, 0xfc, 0x4c, 0xe0, 0xee, 0xef, 0x27, 0xfe,
-	0xec, 0x7a, 0x7a, 0x2b, 0x34, 0xeb, 0xc5, 0x7f, 0xd1, 0x0a, 0x3f, 0xbd, 0xa3, 0xf3, 0x99, 0x4d,
-	0x2e, 0x66, 0x36, 0xf9, 0x3e, 0xb3, 0xc9, 0x97, 0xb9, 0xdd, 0xb8, 0x98, 0xdb, 0x8d, 0xaf, 0x73,
-	0xbb, 0xf1, 0xee, 0x79, 0x65, 0xcc, 0xb1, 0x90, 0x21, 0xed, 0xc6, 0xa8, 0xbd, 0xbc, 0x44, 0xb7,
-	0xf2, 0xaa, 0x4f, 0xaf, 0x7c, 0x3b, 0xd2, 0xe9, 0x8f, 0x5a, 0xd9, 0x13, 0x7f, 0xf2, 0x2b, 0x00,
-	0x00, 0xff, 0xff, 0x53, 0x05, 0x84, 0x22, 0x67, 0x04, 0x00, 0x00,
+	// 375 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0x4d, 0x4b, 0xc3, 0x40,
+	0x10, 0x6d, 0x5a, 0x68, 0xcd, 0x20, 0x8a, 0x51, 0x30, 0x46, 0x09, 0x25, 0x88, 0xf4, 0x60, 0x13,
+	0xa8, 0x5e, 0x3c, 0x56, 0x28, 0xe2, 0x21, 0x97, 0x14, 0x2f, 0x9e, 0xdc, 0x36, 0xcb, 0x36, 0xd8,
+	0xec, 0x86, 0xdd, 0x0d, 0xd4, 0xff, 0xe0, 0xc1, 0x9f, 0xe5, 0xcd, 0x1e, 0x3d, 0x4a, 0xfb, 0x47,
+	0xc4, 0x7c, 0x35, 0x2d, 0x92, 0xea, 0x6d, 0x66, 0xf6, 0xcd, 0x7b, 0x6f, 0x1f, 0x0c, 0x9c, 0x87,
+	0x38, 0x1c, 0x61, 0x2e, 0x26, 0x41, 0x14, 0x32, 0x3f, 0x9e, 0x62, 0x67, 0x35, 0x70, 0xe4, 0xcc,
+	0x8e, 0x38, 0x93, 0x4c, 0x3b, 0xdd, 0x44, 0xd9, 0xab, 0x81, 0x71, 0x44, 0x18, 0x61, 0x09, 0xce,
+	0xf9, 0xa9, 0xd2, 0x15, 0xa3, 0x53, 0x45, 0x9c, 0x96, 0x29, 0xd2, 0xea, 0x83, 0xea, 0x0a, 0x32,
+	0xa0, 0x9c, 0x4d, 0xa7, 0x9a, 0x0e, 0xad, 0x31, 0xc7, 0x48, 0x32, 0xae, 0x2b, 0x6d, 0xa5, 0xa3,
+	0x7a, 0x79, 0xab, 0x19, 0xb0, 0x43, 0x83, 0xf1, 0x33, 0x45, 0x21, 0xd6, 0x1b, 0xc9, 0x53, 0xd1,
+	0x5b, 0x87, 0x70, 0x50, 0x50, 0x78, 0x58, 0x44, 0x8c, 0x0a, 0x6c, 0xbd, 0x2a, 0xb0, 0xef, 0x0a,
+	0xf2, 0x10, 0xf9, 0x48, 0xe2, 0xa1, 0x44, 0x32, 0x16, 0x15, 0xf4, 0x3a, 0xb4, 0x90, 0xef, 0x73,
+	0x2c, 0x84, 0x5e, 0x4f, 0x5f, 0xb2, 0x56, 0x1b, 0x40, 0x53, 0x24, 0xdb, 0x89, 0xec, 0x5e, 0xaf,
+	0x6b, 0x57, 0xa4, 0x61, 0xbb, 0x45, 0x99, 0x4a, 0x7a, 0xd9, 0xb2, 0x75, 0x02, 0xc7, 0x1b, 0x6e,
+	0x0a, 0xa7, 0xf7, 0x89, 0xd1, 0xbe, 0xef, 0xdf, 0xc5, 0x88, 0xfb, 0x01, 0xa2, 0x55, 0x46, 0xcf,
+	0x40, 0x25, 0x39, 0x4c, 0xaf, 0xb7, 0x1b, 0x1d, 0xd5, 0x5b, 0x0d, 0x32, 0x95, 0x32, 0x55, 0xae,
+	0xd2, 0xfb, 0xa8, 0x43, 0xc3, 0x15, 0x44, 0x7b, 0x82, 0x66, 0x16, 0xf6, 0x45, 0xf5, 0x4f, 0xf2,
+	0x44, 0x0d, 0xfb, 0x6f, 0xb8, 0x5c, 0x49, 0xe3, 0xb0, 0xbb, 0x96, 0xfa, 0xe5, 0xb6, 0xfd, 0x32,
+	0xda, 0xb8, 0xfe, 0x0f, 0xba, 0xac, 0xb9, 0x16, 0xe0, 0x56, 0xcd, 0x32, 0x7a, 0xbb, 0xe6, 0x6f,
+	0x89, 0xde, 0x0e, 0xdf, 0x17, 0xa6, 0x32, 0x5f, 0x98, 0xca, 0xd7, 0xc2, 0x54, 0xde, 0x96, 0x66,
+	0x6d, 0xbe, 0x34, 0x6b, 0x9f, 0x4b, 0xb3, 0xf6, 0x78, 0x43, 0x02, 0x39, 0x89, 0x47, 0xf6, 0x98,
+	0x85, 0x0e, 0x65, 0x3c, 0x40, 0x5d, 0x8a, 0xa5, 0x93, 0x32, 0x77, 0x4b, 0x87, 0x30, 0x5b, 0x3b,
+	0xb7, 0x97, 0x08, 0x8b, 0x51, 0x33, 0xb9, 0x8a, 0xab, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0xcc,
+	0xc0, 0xa6, 0x41, 0x9a, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -380,8 +363,8 @@ type MsgClient interface {
 	Enroll(ctx context.Context, in *MsgEnroll, opts ...grpc.CallOption) (*MsgEnrollResponse, error)
 	// UpdateStatus updates a member's electorate status
 	UpdateStatus(ctx context.Context, in *MsgUpdateStatus, opts ...grpc.CallOption) (*MsgUpdateStatusResponse, error)
-	// UpdateDirectDemocracy submits a proposal to update the guardians and/or total voting weight
-	UpdateDirectDemocracy(ctx context.Context, in *MsgUpdateDirectDemocracy, opts ...grpc.CallOption) (*MsgUpdateDirectDemocracyResponse, error)
+	// AddGuardians submits a proposal to add guardians
+	AddGuardians(ctx context.Context, in *MsgAddGuardians, opts ...grpc.CallOption) (*MsgAddGuardiansResponse, error)
 }
 
 type msgClient struct {
@@ -410,9 +393,9 @@ func (c *msgClient) UpdateStatus(ctx context.Context, in *MsgUpdateStatus, opts 
 	return out, nil
 }
 
-func (c *msgClient) UpdateDirectDemocracy(ctx context.Context, in *MsgUpdateDirectDemocracy, opts ...grpc.CallOption) (*MsgUpdateDirectDemocracyResponse, error) {
-	out := new(MsgUpdateDirectDemocracyResponse)
-	err := c.cc.Invoke(ctx, "/membershipmodule.membership.Msg/UpdateDirectDemocracy", in, out, opts...)
+func (c *msgClient) AddGuardians(ctx context.Context, in *MsgAddGuardians, opts ...grpc.CallOption) (*MsgAddGuardiansResponse, error) {
+	out := new(MsgAddGuardiansResponse)
+	err := c.cc.Invoke(ctx, "/membershipmodule.membership.Msg/AddGuardians", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -425,8 +408,8 @@ type MsgServer interface {
 	Enroll(context.Context, *MsgEnroll) (*MsgEnrollResponse, error)
 	// UpdateStatus updates a member's electorate status
 	UpdateStatus(context.Context, *MsgUpdateStatus) (*MsgUpdateStatusResponse, error)
-	// UpdateDirectDemocracy submits a proposal to update the guardians and/or total voting weight
-	UpdateDirectDemocracy(context.Context, *MsgUpdateDirectDemocracy) (*MsgUpdateDirectDemocracyResponse, error)
+	// AddGuardians submits a proposal to add guardians
+	AddGuardians(context.Context, *MsgAddGuardians) (*MsgAddGuardiansResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -439,8 +422,8 @@ func (*UnimplementedMsgServer) Enroll(ctx context.Context, req *MsgEnroll) (*Msg
 func (*UnimplementedMsgServer) UpdateStatus(ctx context.Context, req *MsgUpdateStatus) (*MsgUpdateStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateStatus not implemented")
 }
-func (*UnimplementedMsgServer) UpdateDirectDemocracy(ctx context.Context, req *MsgUpdateDirectDemocracy) (*MsgUpdateDirectDemocracyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateDirectDemocracy not implemented")
+func (*UnimplementedMsgServer) AddGuardians(ctx context.Context, req *MsgAddGuardians) (*MsgAddGuardiansResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGuardians not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -483,20 +466,20 @@ func _Msg_UpdateStatus_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_UpdateDirectDemocracy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgUpdateDirectDemocracy)
+func _Msg_AddGuardians_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgAddGuardians)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MsgServer).UpdateDirectDemocracy(ctx, in)
+		return srv.(MsgServer).AddGuardians(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/membershipmodule.membership.Msg/UpdateDirectDemocracy",
+		FullMethod: "/membershipmodule.membership.Msg/AddGuardians",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).UpdateDirectDemocracy(ctx, req.(*MsgUpdateDirectDemocracy))
+		return srv.(MsgServer).AddGuardians(ctx, req.(*MsgAddGuardians))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -514,8 +497,8 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Msg_UpdateStatus_Handler,
 		},
 		{
-			MethodName: "UpdateDirectDemocracy",
-			Handler:    _Msg_UpdateDirectDemocracy_Handler,
+			MethodName: "AddGuardians",
+			Handler:    _Msg_AddGuardians_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -647,7 +630,7 @@ func (m *MsgUpdateStatusResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgUpdateDirectDemocracy) Marshal() (dAtA []byte, err error) {
+func (m *MsgAddGuardians) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -657,42 +640,21 @@ func (m *MsgUpdateDirectDemocracy) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgUpdateDirectDemocracy) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgAddGuardians) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgUpdateDirectDemocracy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgAddGuardians) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.TotalVotingWeight != nil {
-		{
-			size := m.TotalVotingWeight.Size()
-			i -= size
-			if _, err := m.TotalVotingWeight.MarshalTo(dAtA[i:]); err != nil {
-				return 0, err
-			}
-			i = encodeVarintTx(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.RemoveGuardians) > 0 {
-		for iNdEx := len(m.RemoveGuardians) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.RemoveGuardians[iNdEx])
-			copy(dAtA[i:], m.RemoveGuardians[iNdEx])
-			i = encodeVarintTx(dAtA, i, uint64(len(m.RemoveGuardians[iNdEx])))
-			i--
-			dAtA[i] = 0x1a
-		}
-	}
-	if len(m.AddGuardians) > 0 {
-		for iNdEx := len(m.AddGuardians) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.AddGuardians[iNdEx])
-			copy(dAtA[i:], m.AddGuardians[iNdEx])
-			i = encodeVarintTx(dAtA, i, uint64(len(m.AddGuardians[iNdEx])))
+	if len(m.Guardians) > 0 {
+		for iNdEx := len(m.Guardians) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Guardians[iNdEx])
+			copy(dAtA[i:], m.Guardians[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.Guardians[iNdEx])))
 			i--
 			dAtA[i] = 0x12
 		}
@@ -707,7 +669,7 @@ func (m *MsgUpdateDirectDemocracy) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 
-func (m *MsgUpdateDirectDemocracyResponse) Marshal() (dAtA []byte, err error) {
+func (m *MsgAddGuardiansResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -717,12 +679,12 @@ func (m *MsgUpdateDirectDemocracyResponse) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *MsgUpdateDirectDemocracyResponse) MarshalTo(dAtA []byte) (int, error) {
+func (m *MsgAddGuardiansResponse) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *MsgUpdateDirectDemocracyResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *MsgAddGuardiansResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -796,7 +758,7 @@ func (m *MsgUpdateStatusResponse) Size() (n int) {
 	return n
 }
 
-func (m *MsgUpdateDirectDemocracy) Size() (n int) {
+func (m *MsgAddGuardians) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -806,26 +768,16 @@ func (m *MsgUpdateDirectDemocracy) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	if len(m.AddGuardians) > 0 {
-		for _, s := range m.AddGuardians {
+	if len(m.Guardians) > 0 {
+		for _, s := range m.Guardians {
 			l = len(s)
 			n += 1 + l + sovTx(uint64(l))
 		}
-	}
-	if len(m.RemoveGuardians) > 0 {
-		for _, s := range m.RemoveGuardians {
-			l = len(s)
-			n += 1 + l + sovTx(uint64(l))
-		}
-	}
-	if m.TotalVotingWeight != nil {
-		l = m.TotalVotingWeight.Size()
-		n += 1 + l + sovTx(uint64(l))
 	}
 	return n
 }
 
-func (m *MsgUpdateDirectDemocracyResponse) Size() (n int) {
+func (m *MsgAddGuardiansResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1187,7 +1139,7 @@ func (m *MsgUpdateStatusResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgUpdateDirectDemocracy) Unmarshal(dAtA []byte) error {
+func (m *MsgAddGuardians) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1210,10 +1162,10 @@ func (m *MsgUpdateDirectDemocracy) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgUpdateDirectDemocracy: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgAddGuardians: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgUpdateDirectDemocracy: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgAddGuardians: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1250,7 +1202,7 @@ func (m *MsgUpdateDirectDemocracy) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AddGuardians", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Guardians", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1278,75 +1230,7 @@ func (m *MsgUpdateDirectDemocracy) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.AddGuardians = append(m.AddGuardians, string(dAtA[iNdEx:postIndex]))
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RemoveGuardians", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RemoveGuardians = append(m.RemoveGuardians, string(dAtA[iNdEx:postIndex]))
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TotalVotingWeight", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			var v github_com_cosmos_cosmos_sdk_types.Dec
-			m.TotalVotingWeight = &v
-			if err := m.TotalVotingWeight.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
+			m.Guardians = append(m.Guardians, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1369,7 +1253,7 @@ func (m *MsgUpdateDirectDemocracy) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *MsgUpdateDirectDemocracyResponse) Unmarshal(dAtA []byte) error {
+func (m *MsgAddGuardiansResponse) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1392,10 +1276,10 @@ func (m *MsgUpdateDirectDemocracyResponse) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: MsgUpdateDirectDemocracyResponse: wiretype end group for non-group")
+			return fmt.Errorf("proto: MsgAddGuardiansResponse: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgUpdateDirectDemocracyResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: MsgAddGuardiansResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

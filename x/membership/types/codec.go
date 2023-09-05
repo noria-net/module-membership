@@ -3,6 +3,7 @@ package types
 import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
+	gov_v1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/msgservice"
@@ -11,7 +12,8 @@ import (
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgEnroll{}, "membership/Enroll", nil)
 	cdc.RegisterConcrete(&MsgUpdateStatus{}, "membership/UpdateStatus", nil)
-	cdc.RegisterConcrete(&MsgUpdateDirectDemocracy{}, "membership/UpdateDirectDemocracy", nil)
+	cdc.RegisterConcrete(&MsgAddGuardians{}, "membership/AddGuardians", nil)
+	cdc.RegisterConcrete(&AddGuardiansProposal{}, "membership/AddGuardiansProposal", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -23,13 +25,12 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgUpdateStatus{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgUpdateDirectDemocracy{},
+		&MsgAddGuardians{},
+	)
+	registry.RegisterImplementations((*gov_v1beta1.Content)(nil),
+		&AddGuardiansProposal{},
 	)
 	// this line is used by starport scaffolding # 3
-
-	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
-
-	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
 
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
 }

@@ -13,8 +13,8 @@ service Msg {
   rpc Enroll(MsgEnroll) returns (MsgEnrollResponse);
   // UpdateStatus updates a member's electorate status
   rpc UpdateStatus(MsgUpdateStatus) returns (MsgUpdateStatusResponse);
-  // UpdateDirectDemocracy submits a proposal to update the guardians and/or total voting weight
-  rpc UpdateDirectDemocracy(MsgUpdateDirectDemocracy) returns (MsgUpdateDirectDemocracyResponse);
+  // AddGuardians submits a proposal to add guardians
+  rpc AddGuardians(MsgAddGuardians) returns (MsgAddGuardiansResponse);
 }
 
 // MsgEnroll provides details for a new membership enrollment.
@@ -36,16 +36,11 @@ message MsgUpdateStatus {
 // MsgUpdateStatusResponse is an empty response
 message MsgUpdateStatusResponse {}
 
-// MsgUpdateDirectDemocracy submits a proposal to update the guardians and/or total voting weight
-message MsgUpdateDirectDemocracy {
+// MsgAddGuardians submits a proposal to add guardians
+message MsgAddGuardians {
   string creator = 1;
-  repeated string add_guardians = 2 [(gogoproto.nullable) = true];
-  repeated string remove_guardians = 3 [(gogoproto.nullable) = true];
-  string total_voting_weight = 4 [
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
-    (gogoproto.nullable) = true
-  ];
+  repeated string guardians = 2;
 }
 
-// MsgUpdateDirectDemocracyResponse is an empty response
-message MsgUpdateDirectDemocracyResponse {}
+// MsgAddGuardiansResponse is an empty response
+message MsgAddGuardiansResponse {}

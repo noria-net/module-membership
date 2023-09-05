@@ -31,9 +31,9 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgUpdateStatus int = 100
 
-	opWeightMsgUpdateDirectDemocracy = "op_weight_msg_update_direct_democracy"
+	opWeightMsgAddGuardians = "op_weight_msg_add_guardians"
 	// TODO: Determine the simulation weight value
-	defaultWeightMsgUpdateDirectDemocracy int = 100
+	defaultWeightMsgAddGuardians int = 100
 
 	// this line is used by starport scaffolding # simapp/module/const
 )
@@ -85,15 +85,15 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		membershipsimulation.SimulateMsgUpdateStatus(am.accountKeeper, am.keeper),
 	))
 
-	var weightMsgUpdateDirectDemocracy int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateDirectDemocracy, &weightMsgUpdateDirectDemocracy, nil,
+	var weightMsgAddGuardians int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgAddGuardians, &weightMsgAddGuardians, nil,
 		func(_ *rand.Rand) {
-			weightMsgUpdateDirectDemocracy = defaultWeightMsgUpdateDirectDemocracy
+			weightMsgAddGuardians = defaultWeightMsgAddGuardians
 		},
 	)
 	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgUpdateDirectDemocracy,
-		membershipsimulation.SimulateMsgUpdateDirectDemocracy(am.accountKeeper, am.keeper),
+		weightMsgAddGuardians,
+		membershipsimulation.SimulateMsgAddGuardians(am.accountKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
@@ -121,10 +121,10 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			},
 		),
 		simulation.NewWeightedProposalMsg(
-			opWeightMsgUpdateDirectDemocracy,
-			defaultWeightMsgUpdateDirectDemocracy,
+			opWeightMsgAddGuardians,
+			defaultWeightMsgAddGuardians,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				membershipsimulation.SimulateMsgUpdateDirectDemocracy(am.accountKeeper, am.keeper)
+				membershipsimulation.SimulateMsgAddGuardians(am.accountKeeper, am.keeper)
 				return nil
 			},
 		),

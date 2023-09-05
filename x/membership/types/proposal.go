@@ -4,84 +4,77 @@ import (
 	"fmt"
 	"strings"
 
-	"cosmossdk.io/math"
+	govcdc "github.com/cosmos/cosmos-sdk/x/gov/codec"
 	gov_v1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 )
 
 const (
-	// ProposalTypeDirectDemocracyUpdate defines the type for a DirectDemocracyUpdateProposal
-	ProposalTypeDirectDemocracyUpdate = "DirectDemocracyUpdate"
+	ProposalTypeAddGuardians = "AddGuardians"
 )
 
 // Ensure all proposals implement govtypes.Content at compile time
 var (
-	_ gov_v1beta1.Content = &DirectDemocracyUpdateProposal{}
+	_ gov_v1beta1.Content = &AddGuardiansProposal{}
 )
 
+func init() {
+	gov_v1beta1.RegisterProposalType(ProposalTypeAddGuardians)
+	govcdc.ModuleCdc.Amino.RegisterConcrete(&AddGuardiansProposal{}, "membership/AddGuardiansProposal", nil)
+}
+
 ////////
-// Direct Democracy Proposal
+// Add Guardian Proposal
 ////////
 
-// DirectDemocracyUpdateProposal creates an empty proposal instance
-func NewEmptyDirectDemocracyUpdateProposal() DirectDemocracyUpdateProposal {
-	return DirectDemocracyUpdateProposal{
-		GuardiansToAdd:    []string{},
-		GuardiansToRemove: []string{},
+// NewAddGuardiansProposal creates an empty proposal instance
+func NewAddGuardiansProposal(title string, description string, creator string, guardiansToAdd []string) gov_v1beta1.Content {
+	return &AddGuardiansProposal{
+		Title:          title,
+		Description:    description,
+		Creator:        creator,
+		GuardiansToAdd: guardiansToAdd,
 	}
 }
 
-// GetTitle returns the title of a direct democracy update proposal.
-func (p *DirectDemocracyUpdateProposal) GetTitle() string { return p.Title }
+// GetTitle returns the title of a add guardians proposal.
+func (p *AddGuardiansProposal) GetTitle() string { return p.Title }
 
-// GetDescription returns the description of a direct democracy update proposal.
-func (p *DirectDemocracyUpdateProposal) GetDescription() string { return p.Description }
+// GetDescription returns the description of a add guardians proposal.
+func (p *AddGuardiansProposal) GetDescription() string { return p.Description }
 
 // ProposalRoute ensures this proposal will be handled by the Membership Module
-func (p *DirectDemocracyUpdateProposal) ProposalRoute() string { return ModuleName }
+func (p *AddGuardiansProposal) ProposalRoute() string { return ModuleName }
 
-func (p *DirectDemocracyUpdateProposal) ProposalType() string {
-	return ProposalTypeDirectDemocracyUpdate
+// ProposalType defines the type for a AddGuardiansProposal
+func (p *AddGuardiansProposal) ProposalType() string {
+	return ProposalTypeAddGuardians
 }
 
-// Validate performs basic validation on the proposal
-func (p *DirectDemocracyUpdateProposal) ValidateBasic() error {
-
-	// Cannot add and remove the same guardian
-	for _, addGuardian := range p.GuardiansToAdd {
-		for _, removeGuardian := range p.GuardiansToRemove {
-			if addGuardian == removeGuardian {
-				return fmt.Errorf("cannot add and remove the same guardian: %s", addGuardian)
-			}
-		}
+// ValidateBasic performs basic validation on the proposal
+func (p *AddGuardiansProposal) ValidateBasic() error {
+	if len(p.GuardiansToAdd) == 0 {
+		return fmt.Errorf("no guardians to add")
 	}
-
-	// Cannot have empty guardian lists AND an empty total voting weight
-	if len(p.GuardiansToAdd) == 0 &&
-		len(p.GuardiansToRemove) == 0 &&
-		p.TotalVotingWeight == nil {
-		return fmt.Errorf("nothing to do")
+	if len(p.Creator) == 0 {
+		return fmt.Errorf("creator address cannot be empty")
 	}
-
-	// Total voting weight must be between 0 and 1, inclusive
-	if p.TotalVotingWeight != nil {
-		if p.TotalVotingWeight.LT(math.LegacyMustNewDecFromStr(MINIMUM_TOTAL_VOTING_WEIGHT)) ||
-			p.TotalVotingWeight.GT(math.LegacyMustNewDecFromStr(MAXIMUM_TOTAL_VOTING_WEIGHT)) {
-			return fmt.Errorf("total voting weight must be between %s and %s, inclusive", MINIMUM_TOTAL_VOTING_WEIGHT, MAXIMUM_TOTAL_VOTING_WEIGHT)
-		}
-	}
-
 	return nil
 }
 
-// String implements fmt.Stringer
-func (p *DirectDemocracyUpdateProposal) String() string {
+// String describes the proposal
+func (p *AddGuardiansProposal) String() string {
 	var b strings.Builder
-	b.WriteString(fmt.Sprintf(`Direct Democracy Update Proposal:
+
+	// Combine GuardiansToAdd into a CSV string
+	var guardiansToAddCSV string
+	if len(p.GuardiansToAdd) > 0 {
+		guardiansToAddCSV = strings.Join(p.GuardiansToAdd, ", ")
+	}
+
+	b.WriteString(fmt.Sprintf(`Add Guardians Proposal:
   Title:              %s
   Description:        %s
   Guardians to Add:   %s
-  Guardians to Remove:%s
-  Total Voting Weight:%s
-`, p.Title, p.Description, p.GuardiansToAdd, p.GuardiansToRemove, p.TotalVotingWeight))
+`, p.Title, p.Description, guardiansToAddCSV))
 	return b.String()
 }

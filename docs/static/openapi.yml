@@ -84404,12 +84404,12 @@ definitions:
       The
 
       Denom
+  membershipmodule.membership.MsgAddGuardiansResponse:
+    type: object
+    title: MsgAddGuardiansResponse is an empty response
   membershipmodule.membership.MsgEnrollResponse:
     type: object
     title: MsgEnrollResponse is an empty response
-  membershipmodule.membership.MsgUpdateDirectDemocracyResponse:
-    type: object
-    title: MsgUpdateDirectDemocracyResponse is an empty response
   membershipmodule.membership.MsgUpdateStatusResponse:
     type: object
     title: MsgUpdateStatusResponse is an empty response

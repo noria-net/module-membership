@@ -66,6 +66,10 @@ func (k Keeper) GetGuardians(ctx sdk.Context) (guardians []*types.Member) {
 	return guardians
 }
 
+// IsGuardian returns true if:
+// - The address is a guardian
+// - The address is a member
+// - The member has a status of MemberElectorate
 func (k Keeper) IsGuardian(ctx sdk.Context, addr sdk.AccAddress) bool {
 	dd := k.GetDirectDemocracySettings(ctx)
 

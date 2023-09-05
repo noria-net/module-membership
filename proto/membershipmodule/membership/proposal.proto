@@ -5,30 +5,21 @@ import "gogoproto/gogo.proto";
 
 option go_package = "github.com/noria-net/module-membership/x/membership/types";
 
-// DirectDemocracyUpdateProposal updates the guardians and the total voting weight
-message DirectDemocracyUpdateProposal {
+// AddGuardiansProposal holds a list of wallets to add as guardians
+message AddGuardiansProposal {
   option (gogoproto.goproto_stringer) = false;
   option (gogoproto.goproto_getters) = false;
 
+  // Title of the proposal
   string title = 1;
+  // Description of the proposal
   string description = 2;
+  // Creator of this proposal
+  string creator = 3;
 
   // Guardians to add
-  repeated string guardians_to_add = 3 [
+  repeated string guardians_to_add = 4 [
     (gogoproto.nullable) = true,
     (gogoproto.jsontag) = "guardians_to_add,omitempty"
-  ];
-
-  // Guardians to remove
-  repeated string guardians_to_remove = 4 [
-    (gogoproto.nullable) = true,
-    (gogoproto.jsontag) = "guardians_to_remove,omitempty"
-  ];
-
-  // Total voting weight
-  string total_voting_weight = 5 [
-    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
-    (gogoproto.nullable) = true,
-    (gogoproto.jsontag) = "total_voting_weight,omitempty"
   ];
 }
