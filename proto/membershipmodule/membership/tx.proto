@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package membershipmodule.membership;
 
-import "gogoproto/gogo.proto";
 import "membershipmodule/membership/member.proto";
 
 option go_package = "github.com/noria-net/module-membership/x/membership/types";
@@ -13,8 +12,6 @@ service Msg {
   rpc Enroll(MsgEnroll) returns (MsgEnrollResponse);
   // UpdateStatus updates a member's electorate status
   rpc UpdateStatus(MsgUpdateStatus) returns (MsgUpdateStatusResponse);
-  // AddGuardians submits a proposal to add guardians
-  rpc AddGuardians(MsgAddGuardians) returns (MsgAddGuardiansResponse);
 }
 
 // MsgEnroll provides details for a new membership enrollment.
@@ -35,12 +32,3 @@ message MsgUpdateStatus {
 
 // MsgUpdateStatusResponse is an empty response
 message MsgUpdateStatusResponse {}
-
-// MsgAddGuardians submits a proposal to add guardians
-message MsgAddGuardians {
-  string creator = 1;
-  repeated string guardians = 2;
-}
-
-// MsgAddGuardiansResponse is an empty response
-message MsgAddGuardiansResponse {}

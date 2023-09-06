@@ -85,17 +85,6 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		membershipsimulation.SimulateMsgUpdateStatus(am.accountKeeper, am.keeper),
 	))
 
-	var weightMsgAddGuardians int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgAddGuardians, &weightMsgAddGuardians, nil,
-		func(_ *rand.Rand) {
-			weightMsgAddGuardians = defaultWeightMsgAddGuardians
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgAddGuardians,
-		membershipsimulation.SimulateMsgAddGuardians(am.accountKeeper, am.keeper),
-	))
-
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -117,14 +106,6 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgUpdateStatus,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				membershipsimulation.SimulateMsgUpdateStatus(am.accountKeeper, am.keeper)
-				return nil
-			},
-		),
-		simulation.NewWeightedProposalMsg(
-			opWeightMsgAddGuardians,
-			defaultWeightMsgAddGuardians,
-			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				membershipsimulation.SimulateMsgAddGuardians(am.accountKeeper, am.keeper)
 				return nil
 			},
 		),

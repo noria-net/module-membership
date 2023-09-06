@@ -37,10 +37,11 @@ func HandleAddGuardiansProposal(ctx sdk.Context, k Keeper, p *types.AddGuardians
 			return errors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid guardian address: %s", err)
 		}
 		// Ensure this address is for an existing member
-		member, found := k.GetMemberAccount(ctx, bechAddr)
-		if !found {
+		if !k.IsMember(ctx, bechAddr) {
 			return errors.Wrapf(sdkerrors.ErrUnauthorized, "member not found at this address: %s", addr)
 		}
+		// Get the member
+		member, _ := k.GetMemberAccount(ctx, bechAddr)
 		// Ensure this member's electorate status is active
 		if member.Status != types.MembershipStatus_MemberElectorate {
 			return errors.Wrapf(sdkerrors.ErrUnauthorized, "member is not active: %s", addr)
@@ -66,6 +67,11 @@ func HandleAddGuardiansProposal(ctx sdk.Context, k Keeper, p *types.AddGuardians
 			return err
 		}
 	}
+
+	// Add these guardians to the DirectDemocracySettings
+	dd := k.GetDirectDemocracySettings(ctx)
+	dd.Guardians = append(dd.Guardians, p.GuardiansToAdd...)
+	k.SetDirectDemocracySettings(ctx, dd)
 
 	return nil
 }

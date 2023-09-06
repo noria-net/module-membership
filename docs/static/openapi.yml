@@ -84404,9 +84404,6 @@ definitions:
       The
 
       Denom
-  membershipmodule.membership.MsgAddGuardiansResponse:
-    type: object
-    title: MsgAddGuardiansResponse is an empty response
   membershipmodule.membership.MsgEnrollResponse:
     type: object
     title: MsgEnrollResponse is an empty response

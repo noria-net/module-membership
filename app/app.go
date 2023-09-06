@@ -516,10 +516,7 @@ func NewWasmApp(
 	govRouter.AddRoute(govtypes.RouterKey, govv1beta1.ProposalHandler).
 		AddRoute(paramproposal.RouterKey, params.NewParamChangeProposalHandler(app.ParamsKeeper)). // This should be removed. It is still in place to avoid failures of modules that have not yet been upgraded.
 		AddRoute(upgradetypes.RouterKey, upgrade.NewSoftwareUpgradeProposalHandler(app.UpgradeKeeper)).
-		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(app.IBCKeeper.ClientKeeper)).
-		// Custom handlers for Membership proposals
-		AddRoute(membershiptypes.RouterKey, membership.NewMembershipProposalHandler(app.MembershipKeeper))
-
+		AddRoute(ibcclienttypes.RouterKey, ibcclient.NewClientProposalHandler(app.IBCKeeper.ClientKeeper))
 	govConfig := govtypes.DefaultConfig()
 	/*
 		Example of setting gov params:
@@ -635,8 +632,6 @@ func NewWasmApp(
 	if len(enabledProposals) != 0 {
 		govRouter.AddRoute(wasm.RouterKey, wasm.NewWasmProposalHandler(app.WasmKeeper, enabledProposals))
 	}
-	// Set legacy router for backwards compatibility with gov v1beta1
-	app.GovKeeper.SetLegacyRouter(govRouter)
 
 	// Create Transfer Stack
 	var transferStack porttypes.IBCModule
@@ -678,6 +673,11 @@ func NewWasmApp(
 		app.AccountKeeper,
 		extendedGovKeeper,
 	)
+	// Custom handlers for Membership proposals
+	govRouter.AddRoute(membershiptypes.RouterKey, membership.NewMembershipProposalHandler(app.MembershipKeeper))
+
+	// Set legacy router for backwards compatibility with gov v1beta1
+	app.GovKeeper.SetLegacyRouter(govRouter)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 

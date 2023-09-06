@@ -2,10 +2,14 @@
 
 echo "GOV TEST: Add new guardian via proposal"
 
-# Me is a regular member
-ADDRESS_ME=mm1dmh80jwx0mv5khvqdz9sj28dmuhvems97wq628
+# Me isn't a member yet
+ADDRESS_ME=mm16rcnqanqy8e99lnzus9tgs8qug6l9r0q9l9vvn
 # VAL1 is a guardian
 ADDRESS_VAL1=mm1e7gp56hf85nk0qtg0542gmmmwq753ww2tg7dws
+
+# Enroll me
+echo "Enrolling me"
+./enroll.sh me --ignore
 
 # Submit the proposal
 ./tx-gas.sh membershipd tx gov submit-legacy-proposal add-guardians \
