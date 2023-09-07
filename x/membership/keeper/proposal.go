@@ -9,7 +9,7 @@ import (
 
 // HandleAddGuardiansProposal adds new guardians when the proposal passes
 func HandleAddGuardiansProposal(ctx sdk.Context, k Keeper, p *types.AddGuardiansProposal) error {
-	// Creator must be a guardian
+	// Must be a valid creator address
 	creator, err := sdk.AccAddressFromBech32(p.Creator)
 	if err != nil {
 		return errors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address: %s", err)
@@ -69,7 +69,7 @@ func HandleAddGuardiansProposal(ctx sdk.Context, k Keeper, p *types.AddGuardians
 
 // HandleRemoveGuardiansProposal removes guardians when the proposal passes
 func HandleRemoveGuardiansProposal(ctx sdk.Context, k Keeper, p *types.RemoveGuardiansProposal) error {
-	// Creator must be a guardian
+	// Must be a valid creator address
 	creator, err := sdk.AccAddressFromBech32(p.Creator)
 	if err != nil {
 		return errors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address: %s", err)
@@ -123,6 +123,46 @@ func HandleRemoveGuardiansProposal(ctx sdk.Context, k Keeper, p *types.RemoveGua
 	return nil
 }
 
+// HandleUpdateTotalVotingWeightProposal updates the total voting weight when the proposal passes
+func HandleUpdateTotalVotingWeightProposal(ctx sdk.Context, k Keeper, p *types.UpdateTotalVotingWeightProposal) error {
+	// Creator must be a guardian
+	creator, err := sdk.AccAddressFromBech32(p.Creator)
+	if err != nil {
+		return errors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address: %s", err)
+	}
+
+	// Only guardians can create this proposal
+	if !k.IsGuardian(ctx, creator) {
+		return errors.Wrapf(sdkerrors.ErrUnauthorized, "creator is not a guardian")
+	}
+
+	// Ensure the total voting weight is > 0 and <= 1
+	if p.NewTotalVotingWeight.LT(sdk.ZeroDec()) || p.NewTotalVotingWeight.GT(sdk.OneDec()) {
+		return errors.Wrapf(sdkerrors.ErrInvalidRequest, "total voting weight must be > 0 and <= 1")
+	}
+
+	// Update the total voting weight
+	dd := k.GetDirectDemocracySettings(ctx)
+	// Save the old value and update to the new value
+	oldTotalVotingWeight := dd.TotalVotingWeight
+	dd.TotalVotingWeight = p.NewTotalVotingWeight
+	k.SetDirectDemocracySettings(ctx, dd)
+
+	// Emit an event saying the total voting weight has changed
+	err = ctx.EventManager().EmitTypedEvent(
+		&types.EventTotalVotingWeightChanged{
+			OldTotalVotingWeight: oldTotalVotingWeight,
+			NewTotalVotingWeight: p.NewTotalVotingWeight,
+		},
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// validateAndFetchMember ensures the address is valid and returns the member
 func validateAndFetchMember(ctx sdk.Context, k Keeper, addr string) (*types.Member, error) {
 	// Address cannot be empty
 	if addr == "" {

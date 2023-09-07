@@ -28,6 +28,8 @@ Separate multiple addresses with commas.
 
 NOTE: Only existing members with status 'electorate' may be added as guardians.
 
+NOTE: Only a guardian may submit this proposal.
+
 Example: Adding a single guardian
 $ %s tx membership add-guardians <address> --deposit=1000000unoria --from=<key_or_address>
 
@@ -71,6 +73,11 @@ $ %s tx membership add-guardians <address1,address2,address3> --deposit=1000000u
 				from.String(),
 				argGuardians,
 			)
+			// Validate the proposal
+			err = content.ValidateBasic()
+			if err != nil {
+				return err
+			}
 
 			msg, err := gov_v1beta1.NewMsgSubmitProposal(content, deposit, from)
 			if err != nil {

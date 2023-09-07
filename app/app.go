@@ -201,6 +201,7 @@ func getGovProposalHandlers() []govclient.ProposalHandler {
 		ibcclientclient.UpgradeProposalHandler,
 		membershipclient.AddGuardiansProposalHandler,
 		membershipclient.RemoveGuardiansProposalHandler,
+		membershipclient.UpdateTotalVotingWeightProposalHandler,
 		// this line is used by starport scaffolding # stargate/app/govProposalHandler
 	)
 

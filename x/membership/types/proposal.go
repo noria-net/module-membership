@@ -4,23 +4,27 @@ import (
 	"fmt"
 	"strings"
 
+	"cosmossdk.io/math"
 	gov_v1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
 )
 
 const (
-	ProposalTypeAddGuardians    = "AddGuardians"
-	ProposalTypeRemoveGuardians = "RemoveGuardians"
+	ProposalTypeAddGuardians            = "AddGuardians"
+	ProposalTypeRemoveGuardians         = "RemoveGuardians"
+	ProposalTypeUpdateTotalVotingWeight = "UpdateTotalVotingWeight"
 )
 
 // Ensure all proposals implement govtypes.Content at compile time
 var (
 	_ gov_v1beta1.Content = &AddGuardiansProposal{}
 	_ gov_v1beta1.Content = &RemoveGuardiansProposal{}
+	_ gov_v1beta1.Content = &UpdateTotalVotingWeightProposal{}
 )
 
 func init() {
 	gov_v1beta1.RegisterProposalType(ProposalTypeAddGuardians)
 	gov_v1beta1.RegisterProposalType(ProposalTypeRemoveGuardians)
+	gov_v1beta1.RegisterProposalType(ProposalTypeUpdateTotalVotingWeight)
 }
 
 ////////
@@ -134,5 +138,59 @@ func (p *RemoveGuardiansProposal) String() string {
   Description:        %s
   Guardians to Remove:%s
 `, p.Title, p.Description, guardiansToRemoveCSV))
+	return b.String()
+}
+
+////////
+// Update Total Voting Weight Proposal
+////////
+
+// NewUpdateTotalVotingWeightProposal creates an empty proposal instance
+func NewUpdateTotalVotingWeightProposal(title string, description string, creator string, totalVotingWeight math.LegacyDec) gov_v1beta1.Content {
+	return &UpdateTotalVotingWeightProposal{
+		Title:                title,
+		Description:          description,
+		Creator:              creator,
+		NewTotalVotingWeight: totalVotingWeight,
+	}
+}
+
+// GetTitle returns the title of a update total voting weight proposal.
+func (p *UpdateTotalVotingWeightProposal) GetTitle() string { return p.Title }
+
+// GetDescription returns the description of a update total voting weight proposal.
+func (p *UpdateTotalVotingWeightProposal) GetDescription() string { return p.Description }
+
+// ProposalRoute ensures this proposal will be handled by the Membership Module
+func (p *UpdateTotalVotingWeightProposal) ProposalRoute() string { return ModuleName }
+
+// ProposalType defines the type for a UpdateTotalVotingWeightProposal
+func (p *UpdateTotalVotingWeightProposal) ProposalType() string {
+	return ProposalTypeUpdateTotalVotingWeight
+}
+
+// ValidateBasic performs basic validation on the proposal
+func (p *UpdateTotalVotingWeightProposal) ValidateBasic() error {
+	if len(p.Creator) == 0 {
+		return fmt.Errorf("creator address cannot be empty")
+	}
+	if p.NewTotalVotingWeight.LTE(math.LegacyZeroDec()) {
+		return fmt.Errorf("total voting weight cannot be <= 0")
+	}
+	if p.NewTotalVotingWeight.GT(math.LegacyOneDec()) {
+		return fmt.Errorf("total voting weight cannot be > 1")
+	}
+	return nil
+}
+
+// String describes the proposal
+func (p *UpdateTotalVotingWeightProposal) String() string {
+	var b strings.Builder
+
+	b.WriteString(fmt.Sprintf(`Update Total Voting Weight Proposal:
+  Title:                   %s
+  Description:             %s
+  New Total Voting Weight: %s
+`, p.Title, p.Description, p.NewTotalVotingWeight))
 	return b.String()
 }

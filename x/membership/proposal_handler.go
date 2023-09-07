@@ -16,6 +16,8 @@ func NewMembershipProposalHandler(k keeper.Keeper) gov_v1beta1.Handler {
 			return keeper.HandleAddGuardiansProposal(ctx, k, c)
 		case *types.RemoveGuardiansProposal:
 			return keeper.HandleRemoveGuardiansProposal(ctx, k, c)
+		case *types.UpdateTotalVotingWeightProposal:
+			return keeper.HandleUpdateTotalVotingWeightProposal(ctx, k, c)
 		default:
 			return errors.Wrapf(sdkerrors.ErrUnknownRequest, "unrecognized membership proposal content type: %T", c)
 		}

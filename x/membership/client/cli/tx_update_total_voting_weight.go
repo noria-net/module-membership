@@ -6,6 +6,7 @@ import (
 
 	"strings"
 
+	"cosmossdk.io/math"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -18,26 +19,29 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func NewSubmitRemoveGuardiansProposal() *cobra.Command {
+func NewSubmitUpdateTotalVotingWeightProposal() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "remove-guardians [addresses]",
-		Short: "Submit a proposal to remove one or more guardians",
+		Use:   "update-total-voting-weight [weight]",
+		Short: "Submit a proposal to update the total voting weight of the guardians",
 		Long: strings.TrimSpace(
-			fmt.Sprintf(`Submit a proposal to remove one or more guardians.
-Separate multiple addresses with commas.
+			fmt.Sprintf(`Submit a proposal to update the total voting weight of the guardians.
+
+NOTE: Only existing members with status 'electorate' may be added as guardians.
 
 NOTE: Only a guardian may submit this proposal.
 
-Example: Removing a single guardian
-$ %s tx membership remove-guardians <address> --deposit=1000000unoria --from=<key_or_address>
+NOTE: The total voting weight must be > 0 and <= 1
 
-Example: Removing multiple guardians
-$ %s tx membership remove-guardians <address1,address2,address3> --deposit=1000000unoria --from=<key_or_address>
+Example: Updating the total voting weight
+$ %s tx membership update-total-voting-weight <total_voting_weight> --deposit=1000000unoria --from=<key_or_address>
 
-`, version.AppName, version.AppName)),
+`, version.AppName)),
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argGuardians := strings.Split(args[0], listSeparator)
+			argWeight, err := math.LegacyNewDecFromStr(args[0])
+			if err != nil {
+				return fmt.Errorf("invalid weight: %w", err)
+			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -65,11 +69,11 @@ $ %s tx membership remove-guardians <address1,address2,address3> --deposit=10000
 			}
 
 			from := clientCtx.GetFromAddress()
-			content := types.NewRemoveGuardiansProposal(
+			content := types.NewUpdateTotalVotingWeightProposal(
 				title,
 				description,
 				from.String(),
-				argGuardians,
+				argWeight,
 			)
 			// Validate the proposal
 			err = content.ValidateBasic()

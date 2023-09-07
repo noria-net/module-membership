@@ -14,6 +14,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgUpdateStatus{}, "membership/UpdateStatus", nil)
 	cdc.RegisterConcrete(&AddGuardiansProposal{}, "membership/AddGuardiansProposal", nil)
 	cdc.RegisterConcrete(&RemoveGuardiansProposal{}, "membership/RemoveGuardiansProposal", nil)
+	cdc.RegisterConcrete(&UpdateTotalVotingWeightProposal{}, "membership/UpdateTotalVotingWeightProposal", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -29,6 +30,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*gov_v1beta1.Content)(nil),
 		&RemoveGuardiansProposal{},
+	)
+	registry.RegisterImplementations((*gov_v1beta1.Content)(nil),
+		&UpdateTotalVotingWeightProposal{},
 	)
 	// this line is used by starport scaffolding # 3
 

@@ -1,12 +1,15 @@
 syntax = "proto3";
 package membershipmodule.membership;
 
+import "gogoproto/gogo.proto";
 import "membershipmodule/membership/member.proto";
 
 option go_package = "github.com/noria-net/module-membership/x/membership/types";
 
 // EventMemberEnrolled is an event emitted when a new member is enrolled
-message EventMemberEnrolled { string member_address = 1; }
+message EventMemberEnrolled {
+  string member_address = 1;
+}
 
 // EventMemberStatusChanged is an event emitted when a member's citizenship
 // status changes
@@ -25,4 +28,19 @@ message EventMemberGrantedGuardianship {
 // EventMemberRevokedGuardianship is an event emitted when a member's guardianship status is revoked
 message EventMemberRevokedGuardianship {
   string member_address = 1;
+}
+
+message EventTotalVotingWeightChanged {
+  // Old total voting weight
+  bytes old_total_voting_weight = 1 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "old_total_voting_weight,omitempty"
+  ];
+  // New total voting weight
+  bytes new_total_voting_weight = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "new_total_voting_weight,omitempty"
+  ];
 }

@@ -42,3 +42,23 @@ message RemoveGuardiansProposal {
     (gogoproto.jsontag) = "guardians_to_remove,omitempty"
   ];
 }
+
+// UpdateTotalVotingWeightProposal holds the new total voting weight
+message UpdateTotalVotingWeightProposal {
+  option (gogoproto.goproto_stringer) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  // Title of the proposal
+  string title = 1;
+  // Description of the proposal
+  string description = 2;
+  // Creator of this proposal
+  string creator = 3;
+
+  // New total voting weight
+  bytes new_total_voting_weight = 4 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "new_total_voting_weight,omitempty"
+  ];
+}
