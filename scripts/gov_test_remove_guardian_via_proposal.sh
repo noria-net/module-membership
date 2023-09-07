@@ -1,21 +1,15 @@
 #!/bin/bash
 
-echo "GOV TEST: Add new guardian via proposal"
+echo "GOV TEST: Remove a guardian via proposal"
 
-# Me isn't a member yet
-ADDRESS_ME=mm16rcnqanqy8e99lnzus9tgs8qug6l9r0q9l9vvn
 # VAL1 is a guardian
 ADDRESS_VAL1=mm1e7gp56hf85nk0qtg0542gmmmwq753ww2tg7dws
 
-# Enroll me
-echo "Enrolling me"
-./enroll.sh me --ignore
-
 # Submit the proposal
-./tx-gas.sh membershipd tx gov submit-legacy-proposal add-guardians \
-  $ADDRESS_ME \
-  --title "add a guardian" \
-  --description "add a guardian" \
+./tx-gas.sh membershipd tx gov submit-legacy-proposal remove-guardians \
+  $ADDRESS_VAL1 \
+  --title "remove a guardian" \
+  --description "remove a guardian" \
   --from val1 \
   --deposit 1000000unoria
 
@@ -37,3 +31,4 @@ membershipd query membership guardians | grep address
 
 echo "Listing all guardians"
 membershipd query membership guardians | grep address
+

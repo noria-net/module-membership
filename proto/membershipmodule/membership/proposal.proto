@@ -23,3 +23,22 @@ message AddGuardiansProposal {
     (gogoproto.jsontag) = "guardians_to_add,omitempty"
   ];
 }
+
+// RemoveGuardiansProposal holds a list of wallets to remove as guardians
+message RemoveGuardiansProposal {
+  option (gogoproto.goproto_stringer) = false;
+  option (gogoproto.goproto_getters) = false;
+
+  // Title of the proposal
+  string title = 1;
+  // Description of the proposal
+  string description = 2;
+  // Creator of this proposal
+  string creator = 3;
+
+  // Guardians to remove
+  repeated string guardians_to_remove = 4 [
+    (gogoproto.nullable) = true,
+    (gogoproto.jsontag) = "guardians_to_remove,omitempty"
+  ];
+}

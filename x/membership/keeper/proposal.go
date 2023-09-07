@@ -27,21 +27,12 @@ func HandleAddGuardiansProposal(ctx sdk.Context, k Keeper, p *types.AddGuardians
 	// no empty or invalid addresses
 	// The whole proposal fails if any of the addresses are invalid
 	for _, addr := range p.GuardiansToAdd {
-		// Address cannot be empty
-		if addr == "" {
-			return errors.Wrapf(sdkerrors.ErrInvalidAddress, "empty guardian address")
-		}
-		// Address must be valid
-		bechAddr, err := sdk.AccAddressFromBech32(addr)
-		if err != nil {
-			return errors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid guardian address: %s", err)
-		}
-		// Ensure this address is for an existing member
-		if !k.IsMember(ctx, bechAddr) {
-			return errors.Wrapf(sdkerrors.ErrUnauthorized, "member not found at this address: %s", addr)
-		}
 		// Get the member
-		member, _ := k.GetMemberAccount(ctx, bechAddr)
+		member, err := validateAndFetchMember(ctx, k, addr)
+		if err != nil {
+			return err
+		}
+
 		// Ensure this member's electorate status is active
 		if member.Status != types.MembershipStatus_MemberElectorate {
 			return errors.Wrapf(sdkerrors.ErrUnauthorized, "member is not active: %s", addr)
@@ -51,7 +42,7 @@ func HandleAddGuardiansProposal(ctx sdk.Context, k Keeper, p *types.AddGuardians
 			return errors.Wrapf(sdkerrors.ErrUnauthorized, "member is already a guardian: %s", addr)
 		}
 		// Add to the list
-		guardiansToAdd = append(guardiansToAdd, bechAddr)
+		guardiansToAdd = append(guardiansToAdd, sdk.MustAccAddressFromBech32(addr))
 	}
 
 	// Ensure we have more than one guardian to add
@@ -74,4 +65,94 @@ func HandleAddGuardiansProposal(ctx sdk.Context, k Keeper, p *types.AddGuardians
 	k.SetDirectDemocracySettings(ctx, dd)
 
 	return nil
+}
+
+// HandleRemoveGuardiansProposal removes guardians when the proposal passes
+func HandleRemoveGuardiansProposal(ctx sdk.Context, k Keeper, p *types.RemoveGuardiansProposal) error {
+	// Creator must be a guardian
+	creator, err := sdk.AccAddressFromBech32(p.Creator)
+	if err != nil {
+		return errors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address: %s", err)
+	}
+
+	// Only guardians can create this proposal
+	if !k.IsGuardian(ctx, creator) {
+		return errors.Wrapf(sdkerrors.ErrUnauthorized, "creator is not a guardian")
+	}
+
+	// Create an array of guardian addresses to remove
+	var guardiansToRemove []sdk.AccAddress
+
+	// Iterate through the GuardiansToRemove and ensure there are
+	// no empty or invalid addresses
+	// The whole proposal fails if any of the addresses are invalid
+	for _, addr := range p.GuardiansToRemove {
+		// Get the member
+		member, err := validateAndFetchMember(ctx, k, addr)
+		if err != nil {
+			return err
+		}
+
+		// Ensure this member is a guardian
+		if !member.IsGuardian {
+			return errors.Wrapf(sdkerrors.ErrUnauthorized, "member is not a guardian: %s", addr)
+		}
+		// Add to the list
+		guardiansToRemove = append(guardiansToRemove, sdk.MustAccAddressFromBech32(addr))
+	}
+
+	// Ensure we have more than one guardian to remove
+	if len(guardiansToRemove) < 1 {
+		return errors.Wrapf(sdkerrors.ErrInvalidRequest, "no guardians to remove")
+	}
+
+	// Loop through guardiansToRemove and remove their guardian status
+	for _, addr := range guardiansToRemove {
+		// Remove from the guardian set
+		err := k.SetMemberGuardianStatus(ctx, addr, false)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Remove these guardians from the DirectDemocracySettings
+	dd := k.GetDirectDemocracySettings(ctx)
+	dd.Guardians = removeFromSlice(dd.Guardians, p.GuardiansToRemove)
+	k.SetDirectDemocracySettings(ctx, dd)
+
+	return nil
+}
+
+func validateAndFetchMember(ctx sdk.Context, k Keeper, addr string) (*types.Member, error) {
+	// Address cannot be empty
+	if addr == "" {
+		return nil, errors.Wrapf(sdkerrors.ErrInvalidAddress, "empty guardian address")
+	}
+	// Address must be valid
+	bechAddr, err := sdk.AccAddressFromBech32(addr)
+	if err != nil {
+		return nil, errors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid guardian address: %s", err)
+	}
+	// Ensure this address is for an existing member
+	if !k.IsMember(ctx, bechAddr) {
+		return nil, errors.Wrapf(sdkerrors.ErrUnauthorized, "member not found at this address: %s", addr)
+	}
+	// Get the member
+	member, _ := k.GetMemberAccount(ctx, bechAddr)
+	return &member, nil
+}
+
+// removeFromSlice excludes itemsToRemove from slice
+func removeFromSlice(slice []string, itemsToRemove []string) []string {
+	var result []string
+	for _, s := range slice {
+
+		for _, item := range itemsToRemove {
+			if s == item {
+				continue
+			}
+		}
+		result = append(result, s)
+	}
+	return result
 }

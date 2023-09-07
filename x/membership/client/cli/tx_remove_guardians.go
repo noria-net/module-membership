@@ -18,21 +18,19 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func NewSubmitAddGuardiansProposal() *cobra.Command {
+func NewSubmitRemoveGuardiansProposal() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "add-guardians [addresses]",
-		Short: "Submit a proposal to add one or more guardians",
+		Use:   "remove-guardians [addresses]",
+		Short: "Submit a proposal to remove one or more guardians",
 		Long: strings.TrimSpace(
-			fmt.Sprintf(`Submit a proposal to add one or more guardians.
+			fmt.Sprintf(`Submit a proposal to remove one or more guardians.
 Separate multiple addresses with commas.
 
-NOTE: Only existing members with status 'electorate' may be added as guardians.
+Example: Removing a single guardian
+$ %s tx membership remove-guardians <address> --deposit=1000000unoria --from=<key_or_address>
 
-Example: Adding a single guardian
-$ %s tx membership add-guardians <address> --deposit=1000000unoria --from=<key_or_address>
-
-Example: Adding multiple guardians
-$ %s tx membership add-guardians <address1,address2,address3> --deposit=1000000unoria --from=<key_or_address>
+Example: Removing multiple guardians
+$ %s tx membership remove-guardians <address1,address2,address3> --deposit=1000000unoria --from=<key_or_address>
 
 `, version.AppName, version.AppName)),
 		Args: cobra.ExactArgs(1),
@@ -65,7 +63,7 @@ $ %s tx membership add-guardians <address1,address2,address3> --deposit=1000000u
 			}
 
 			from := clientCtx.GetFromAddress()
-			content := types.NewAddGuardiansProposal(
+			content := types.NewRemoveGuardiansProposal(
 				title,
 				description,
 				from.String(),

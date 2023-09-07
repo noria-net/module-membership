@@ -6,5 +6,6 @@ import (
 )
 
 var (
-	AddGuardiansProposalHandler = govclient.NewProposalHandler(cli.CmdSubmitAddGuardiansProposal)
+	AddGuardiansProposalHandler    = govclient.NewProposalHandler(cli.NewSubmitAddGuardiansProposal)
+	RemoveGuardiansProposalHandler = govclient.NewProposalHandler(cli.NewSubmitRemoveGuardiansProposal)
 )
