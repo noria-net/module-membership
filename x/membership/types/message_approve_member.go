@@ -1,6 +1,7 @@
 package types
 
 import (
+	"cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
@@ -9,9 +10,10 @@ const TypeMsgApproveMember = "approve_member"
 
 var _ sdk.Msg = &MsgApproveMember{}
 
-func NewMsgApproveMember(creator string) *MsgApproveMember {
+func NewMsgApproveMember(approver string, member string) *MsgApproveMember {
 	return &MsgApproveMember{
-		Creator: creator,
+		Approver: approver,
+		Member:   member,
 	}
 }
 
@@ -24,7 +26,7 @@ func (msg *MsgApproveMember) Type() string {
 }
 
 func (msg *MsgApproveMember) GetSigners() []sdk.AccAddress {
-	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	creator, err := sdk.AccAddressFromBech32(msg.Approver)
 	if err != nil {
 		panic(err)
 	}
@@ -37,9 +39,13 @@ func (msg *MsgApproveMember) GetSignBytes() []byte {
 }
 
 func (msg *MsgApproveMember) ValidateBasic() error {
-	_, err := sdk.AccAddressFromBech32(msg.Creator)
-	if err != nil {
-		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
+	// Approver and member addresses must be valid
+	if _, err := sdk.AccAddressFromBech32(msg.Approver); err != nil {
+		return errors.Wrap(sdkerrors.ErrInvalidAddress, "invalid approver address")
 	}
+	if _, err := sdk.AccAddressFromBech32(msg.Member); err != nil {
+		return errors.Wrap(sdkerrors.ErrInvalidAddress, "invalid member address")
+	}
+
 	return nil
 }

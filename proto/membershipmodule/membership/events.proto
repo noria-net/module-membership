@@ -45,3 +45,11 @@ message EventTotalVotingWeightChanged {
     (gogoproto.jsontag) = "new_total_voting_weight,omitempty"
   ];
 }
+
+// EventMemberApproved is an event emitted when a member is approved
+message EventMemberApproved {
+  // Address of the member that was approved
+  string member_address = 1;
+  // Address of the approver
+  string approver_address = 2;
+}

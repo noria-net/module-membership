@@ -11,14 +11,16 @@ option go_package = "github.com/noria-net/module-membership/x/membership/types";
 enum MembershipStatus {
   // MEMBERSHIP_STATUS_UNSPECIFIED defines a no-op status
   MEMBERSHIP_STATUS_UNSPECIFIED = 0 [(gogoproto.enumvalue_customname) = "MemberStatusEmpty"];
+  // MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
+  MEMBERSHIP_STATUS_PENDING_APPROVAL = 1 [(gogoproto.enumvalue_customname) = "MemberStatusPendingApproval"];
   // MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
-  MEMBERSHIP_STATUS_ELECTORATE = 1 [(gogoproto.enumvalue_customname) = "MemberElectorate"];
+  MEMBERSHIP_STATUS_ELECTORATE = 2 [(gogoproto.enumvalue_customname) = "MemberElectorate"];
   // MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
-  MEMBERSHIP_STATUS_INACTIVE = 2 [(gogoproto.enumvalue_customname) = "MemberInactive"];
+  MEMBERSHIP_STATUS_INACTIVE = 3 [(gogoproto.enumvalue_customname) = "MemberInactive"];
   // MEMBERSHIP_STATUS_RECALLED defines this member as being recalled
-  MEMBERSHIP_STATUS_RECALLED = 3 [(gogoproto.enumvalue_customname) = "MemberRecalled"];
+  MEMBERSHIP_STATUS_RECALLED = 4 [(gogoproto.enumvalue_customname) = "MemberRecalled"];
   // MEMBERSHIP_STATUS_EXPULSED defines this member as being expulsed
-  MEMBERSHIP_STATUS_EXPULSED = 4 [(gogoproto.enumvalue_customname) = "MemberExpulsed"];
+  MEMBERSHIP_STATUS_EXPULSED = 5 [(gogoproto.enumvalue_customname) = "MemberExpulsed"];
 }
 
 // Member is a specialisation of BaseAccount that adds Member Status and

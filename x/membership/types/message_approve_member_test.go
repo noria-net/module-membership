@@ -4,27 +4,39 @@ import (
 	"testing"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/noria-net/module-membership/testutil/sample"
 	"github.com/stretchr/testify/require"
 )
 
 func TestMsgApproveMember_ValidateBasic(t *testing.T) {
+	valid_1 := "cosmos1l0znsvddllw9knha3yx2svnlxny676d8ns7uys"
+	valid_2 := "cosmos1j8pp7zvcu9z8vd882m284j29fn2dszh05cqvf9"
+	invalid := "invalid_address"
+
 	tests := []struct {
 		name string
 		msg  MsgApproveMember
 		err  error
 	}{
 		{
-			name: "invalid address",
+			name: "invalid approver address",
 			msg: MsgApproveMember{
-				Creator: "invalid_address",
+				Approver: invalid,
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
-			name: "valid address",
+			name: "invalid member address",
 			msg: MsgApproveMember{
-				Creator: sample.AccAddress(),
+				Approver: valid_1,
+				Member:   invalid,
 			},
+			err: sdkerrors.ErrInvalidAddress,
+		}, {
+			name: "valid message",
+			msg: MsgApproveMember{
+				Approver: valid_1,
+				Member:   valid_2,
+			},
+			err: nil,
 		},
 	}
 	for _, tt := range tests {

@@ -17,4 +17,5 @@ var (
 	ErrVoterNotAMember                  = errors.Register(ModuleName, 8, "voter is not a member")
 	ErrMemberNotEligibleToVote          = errors.Register(ModuleName, 9, "member is not eligible to vote")
 	ErrInvalidVoteWeighting             = errors.Register(ModuleName, 10, "invalid vote weighting")
+	ErrMemberNotPendingApproval         = errors.Register(ModuleName, 11, "member's status is not pending")
 )

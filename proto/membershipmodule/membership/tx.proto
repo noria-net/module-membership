@@ -37,7 +37,10 @@ message MsgUpdateStatusResponse {}
 
 // MsgApproveMember approves a member's enrollment
 message MsgApproveMember {
-  string creator = 1;
+  // The guardian approver's address
+  string approver = 1;
+  // The member's address
+  string member = 2;
 }
 
 // MsgApproveMemberResponse is an empty response

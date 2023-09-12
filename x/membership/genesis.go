@@ -14,7 +14,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, address := range genState.DirectDemocracy.Guardians {
 		guardian := sdk.MustAccAddressFromBech32(address)
 		if !k.IsMember(ctx, guardian) {
+			// Add the member
 			k.AppendMember(ctx, guardian)
+			// Set their status to Electorate
+			k.UpdateMemberStatus(ctx, guardian, types.MembershipStatus_MemberElectorate)
 		}
 		if !k.IsGuardian(ctx, guardian) {
 			k.SetMemberGuardianStatus(ctx, guardian, true)

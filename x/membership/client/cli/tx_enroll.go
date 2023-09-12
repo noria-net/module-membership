@@ -1,11 +1,14 @@
 package cli
 
 import (
+	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
+	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/noria-net/module-membership/x/membership/types"
 	"github.com/spf13/cobra"
 )
@@ -20,7 +23,15 @@ func CmdEnroll() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "enroll",
 		Short: "Enroll the caller as an electorate member",
-		Args:  cobra.ExactArgs(0),
+		Long: strings.TrimSpace(
+			fmt.Sprintf(`Enroll the caller as an electorate member.
+
+NOTE: A Guardian will need to approve the member's enrollment before it becomes active. This is done with the approve-member command.
+
+Example:
+$ %s tx membership enroll --from=<key_or_address> --nickname=<nickname>
+`, version.AppName)),
+		Args: cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {

@@ -52416,6 +52416,7 @@ paths:
                       type: string
                       enum:
                         - MEMBERSHIP_STATUS_UNSPECIFIED
+                        - MEMBERSHIP_STATUS_PENDING_APPROVAL
                         - MEMBERSHIP_STATUS_ELECTORATE
                         - MEMBERSHIP_STATUS_INACTIVE
                         - MEMBERSHIP_STATUS_RECALLED
@@ -52424,6 +52425,7 @@ paths:
                       description: >-
                         - MEMBERSHIP_STATUS_UNSPECIFIED:
                         MEMBERSHIP_STATUS_UNSPECIFIED defines a no-op status
+                         - MEMBERSHIP_STATUS_PENDING_APPROVAL: MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
                          - MEMBERSHIP_STATUS_ELECTORATE: MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
                          - MEMBERSHIP_STATUS_INACTIVE: MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
                          - MEMBERSHIP_STATUS_RECALLED: MEMBERSHIP_STATUS_RECALLED defines this member as being recalled
@@ -52849,6 +52851,7 @@ paths:
                     type: string
                     enum:
                       - MEMBERSHIP_STATUS_UNSPECIFIED
+                      - MEMBERSHIP_STATUS_PENDING_APPROVAL
                       - MEMBERSHIP_STATUS_ELECTORATE
                       - MEMBERSHIP_STATUS_INACTIVE
                       - MEMBERSHIP_STATUS_RECALLED
@@ -52857,6 +52860,7 @@ paths:
                     description: >-
                       - MEMBERSHIP_STATUS_UNSPECIFIED:
                       MEMBERSHIP_STATUS_UNSPECIFIED defines a no-op status
+                       - MEMBERSHIP_STATUS_PENDING_APPROVAL: MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
                        - MEMBERSHIP_STATUS_ELECTORATE: MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
                        - MEMBERSHIP_STATUS_INACTIVE: MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
                        - MEMBERSHIP_STATUS_RECALLED: MEMBERSHIP_STATUS_RECALLED defines this member as being recalled
@@ -53281,6 +53285,7 @@ paths:
                       type: string
                       enum:
                         - MEMBERSHIP_STATUS_UNSPECIFIED
+                        - MEMBERSHIP_STATUS_PENDING_APPROVAL
                         - MEMBERSHIP_STATUS_ELECTORATE
                         - MEMBERSHIP_STATUS_INACTIVE
                         - MEMBERSHIP_STATUS_RECALLED
@@ -53289,6 +53294,7 @@ paths:
                       description: >-
                         - MEMBERSHIP_STATUS_UNSPECIFIED:
                         MEMBERSHIP_STATUS_UNSPECIFIED defines a no-op status
+                         - MEMBERSHIP_STATUS_PENDING_APPROVAL: MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
                          - MEMBERSHIP_STATUS_ELECTORATE: MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
                          - MEMBERSHIP_STATUS_INACTIVE: MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
                          - MEMBERSHIP_STATUS_RECALLED: MEMBERSHIP_STATUS_RECALLED defines this member as being recalled
@@ -84362,6 +84368,7 @@ definitions:
         type: string
         enum:
           - MEMBERSHIP_STATUS_UNSPECIFIED
+          - MEMBERSHIP_STATUS_PENDING_APPROVAL
           - MEMBERSHIP_STATUS_ELECTORATE
           - MEMBERSHIP_STATUS_INACTIVE
           - MEMBERSHIP_STATUS_RECALLED
@@ -84370,6 +84377,7 @@ definitions:
         description: >-
           - MEMBERSHIP_STATUS_UNSPECIFIED: MEMBERSHIP_STATUS_UNSPECIFIED defines
           a no-op status
+           - MEMBERSHIP_STATUS_PENDING_APPROVAL: MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
            - MEMBERSHIP_STATUS_ELECTORATE: MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
            - MEMBERSHIP_STATUS_INACTIVE: MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
            - MEMBERSHIP_STATUS_RECALLED: MEMBERSHIP_STATUS_RECALLED defines this member as being recalled
@@ -84387,6 +84395,7 @@ definitions:
     type: string
     enum:
       - MEMBERSHIP_STATUS_UNSPECIFIED
+      - MEMBERSHIP_STATUS_PENDING_APPROVAL
       - MEMBERSHIP_STATUS_ELECTORATE
       - MEMBERSHIP_STATUS_INACTIVE
       - MEMBERSHIP_STATUS_RECALLED
@@ -84395,6 +84404,7 @@ definitions:
     description: >-
       - MEMBERSHIP_STATUS_UNSPECIFIED: MEMBERSHIP_STATUS_UNSPECIFIED defines a
       no-op status
+       - MEMBERSHIP_STATUS_PENDING_APPROVAL: MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
        - MEMBERSHIP_STATUS_ELECTORATE: MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
        - MEMBERSHIP_STATUS_INACTIVE: MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
        - MEMBERSHIP_STATUS_RECALLED: MEMBERSHIP_STATUS_RECALLED defines this member as being recalled
@@ -84621,6 +84631,7 @@ definitions:
               type: string
               enum:
                 - MEMBERSHIP_STATUS_UNSPECIFIED
+                - MEMBERSHIP_STATUS_PENDING_APPROVAL
                 - MEMBERSHIP_STATUS_ELECTORATE
                 - MEMBERSHIP_STATUS_INACTIVE
                 - MEMBERSHIP_STATUS_RECALLED
@@ -84629,6 +84640,7 @@ definitions:
               description: >-
                 - MEMBERSHIP_STATUS_UNSPECIFIED: MEMBERSHIP_STATUS_UNSPECIFIED
                 defines a no-op status
+                 - MEMBERSHIP_STATUS_PENDING_APPROVAL: MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
                  - MEMBERSHIP_STATUS_ELECTORATE: MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
                  - MEMBERSHIP_STATUS_INACTIVE: MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
                  - MEMBERSHIP_STATUS_RECALLED: MEMBERSHIP_STATUS_RECALLED defines this member as being recalled
@@ -84852,6 +84864,7 @@ definitions:
             type: string
             enum:
               - MEMBERSHIP_STATUS_UNSPECIFIED
+              - MEMBERSHIP_STATUS_PENDING_APPROVAL
               - MEMBERSHIP_STATUS_ELECTORATE
               - MEMBERSHIP_STATUS_INACTIVE
               - MEMBERSHIP_STATUS_RECALLED
@@ -84860,6 +84873,7 @@ definitions:
             description: >-
               - MEMBERSHIP_STATUS_UNSPECIFIED: MEMBERSHIP_STATUS_UNSPECIFIED
               defines a no-op status
+               - MEMBERSHIP_STATUS_PENDING_APPROVAL: MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
                - MEMBERSHIP_STATUS_ELECTORATE: MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
                - MEMBERSHIP_STATUS_INACTIVE: MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
                - MEMBERSHIP_STATUS_RECALLED: MEMBERSHIP_STATUS_RECALLED defines this member as being recalled
@@ -85079,6 +85093,7 @@ definitions:
               type: string
               enum:
                 - MEMBERSHIP_STATUS_UNSPECIFIED
+                - MEMBERSHIP_STATUS_PENDING_APPROVAL
                 - MEMBERSHIP_STATUS_ELECTORATE
                 - MEMBERSHIP_STATUS_INACTIVE
                 - MEMBERSHIP_STATUS_RECALLED
@@ -85087,6 +85102,7 @@ definitions:
               description: >-
                 - MEMBERSHIP_STATUS_UNSPECIFIED: MEMBERSHIP_STATUS_UNSPECIFIED
                 defines a no-op status
+                 - MEMBERSHIP_STATUS_PENDING_APPROVAL: MEMBERSHIP_STATUS_PENDING_APPROVAL defines this member as being pending approval
                  - MEMBERSHIP_STATUS_ELECTORATE: MEMBERSHIP_STATUS_ELECTORATE defines this member as being an active citizen
                  - MEMBERSHIP_STATUS_INACTIVE: MEMBERSHIP_STATUS_INACTIVE defines this member as being an inactive citizen
                  - MEMBERSHIP_STATUS_RECALLED: MEMBERSHIP_STATUS_RECALLED defines this member as being recalled

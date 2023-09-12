@@ -29,7 +29,7 @@ var AllowedMembershipStatusTransitions = map[MembershipStatus][]MembershipStatus
 func NewMemberAccountWithDefaultMemberStatus(baseAccount *authtypes.BaseAccount) *Member {
 	acc := &Member{
 		BaseAccount: baseAccount,
-		Status:      MembershipStatus_MemberElectorate,
+		Status:      MembershipStatus_MemberStatusPendingApproval,
 	}
 	return acc
 }

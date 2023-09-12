@@ -16,9 +16,11 @@ func SimulateMsgApproveMember(
 ) simtypes.Operation {
 	return func(r *rand.Rand, app *baseapp.BaseApp, ctx sdk.Context, accs []simtypes.Account, chainID string,
 	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
-		simAccount, _ := simtypes.RandomAcc(r, accs)
+		simApprover, _ := simtypes.RandomAcc(r, accs)
+		simMember, _ := simtypes.RandomAcc(r, accs)
 		msg := &types.MsgApproveMember{
-			Creator: simAccount.Address.String(),
+			Approver: simApprover.Address.String(),
+			Member:   simMember.Address.String(),
 		}
 
 		// TODO: Handling the ApproveMember simulation
