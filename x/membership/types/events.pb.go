@@ -229,6 +229,7 @@ func (m *EventMemberRevokedGuardianship) GetMemberAddress() string {
 	return ""
 }
 
+// EventTotalVotingWeightChanged is an event emitted when the total voting weight changes
 type EventTotalVotingWeightChanged struct {
 	// Old total voting weight
 	OldTotalVotingWeight github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,1,opt,name=old_total_voting_weight,json=oldTotalVotingWeight,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"old_total_voting_weight,omitempty"`

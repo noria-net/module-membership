@@ -84404,6 +84404,9 @@ definitions:
       The
 
       Denom
+  membershipmodule.membership.MsgApproveMemberResponse:
+    type: object
+    title: MsgApproveMemberResponse is an empty response
   membershipmodule.membership.MsgEnrollResponse:
     type: object
     title: MsgEnrollResponse is an empty response

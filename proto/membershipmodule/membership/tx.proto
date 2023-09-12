@@ -12,6 +12,8 @@ service Msg {
   rpc Enroll(MsgEnroll) returns (MsgEnrollResponse);
   // UpdateStatus updates a member's electorate status
   rpc UpdateStatus(MsgUpdateStatus) returns (MsgUpdateStatusResponse);
+  // ApproveMember approves a member's enrollment
+  rpc ApproveMember(MsgApproveMember) returns (MsgApproveMemberResponse);
 }
 
 // MsgEnroll provides details for a new membership enrollment.
@@ -32,3 +34,11 @@ message MsgUpdateStatus {
 
 // MsgUpdateStatusResponse is an empty response
 message MsgUpdateStatusResponse {}
+
+// MsgApproveMember approves a member's enrollment
+message MsgApproveMember {
+  string creator = 1;
+}
+
+// MsgApproveMemberResponse is an empty response
+message MsgApproveMemberResponse {}

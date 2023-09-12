@@ -30,6 +30,7 @@ message EventMemberRevokedGuardianship {
   string member_address = 1;
 }
 
+// EventTotalVotingWeightChanged is an event emitted when the total voting weight changes
 message EventTotalVotingWeightChanged {
   // Old total voting weight
   bytes old_total_voting_weight = 1 [
